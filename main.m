@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <IOKit/usb/IOUSBLib.h>
 #import <mach/mach_port.h>
+#import "Notification.h"
 
 static void processDevice(struct IOUSBDeviceStruct320 **deviceIntf)
 {
@@ -111,10 +112,11 @@ static void usbUnfreeze()
 
     IOObjectRelease(devIter);
     mach_port_deallocate(mach_task_self(), mMasterDevicePort);
+    NSLog(@"usbunfreeze finished");
 }
-
 
 int main(int argc, const char * argv[]) {
     usbUnfreeze();
+    [[Notification new ]showNotification:@"Unfreeze launched and fixed the laptop" withTitle:@"usbunfreeze"];
     return 0;
 }
